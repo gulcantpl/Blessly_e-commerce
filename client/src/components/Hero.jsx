@@ -15,7 +15,7 @@ const Hero = () => {
                 <div className='absolute inset-0 flex items-center justify-start max-w-[1440px] mx-auto px-4 md:px-8 z-10'>
                     <div className='max-w-xl md:max-w-3xl  md:pl-0'>
                         <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl 
-                                   font-bold pl-5 capitalize leading-tight mb-3 md:mb-5'>
+                                   font-bold pl-5 capitalize leading-tight mb-3 text-shadow-lg md:mb-5'>
                             Master Your <br /> Makeup Routine.
                         </h1>
                         <p className='text-sm sm:text-base md:text-xl pl-5 max-w-lg mb-6'>

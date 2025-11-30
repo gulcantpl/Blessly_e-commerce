@@ -1,13 +1,36 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import Navbar from './Navbar'
 import { assets } from '../assets/data'
+import { useClerk, UserButton } from '@clerk/clerk-react'
+import { useAppContext } from '../context/AppContext'
 
 const Header = () => {
 
     const [menuOpened, setMenuOpened] = useState(false)
     const toggleMenu = () => setMenuOpened(prev => !prev)
-
+    const OrdersIcon = () => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 36 36"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-scroll-text-icon lucide-scroll-text"
+        >
+            <path d="M15 12h-5" />
+            <path d="M19 12h-5" />
+            <path d="M15 8h-5" />
+            <path d="M19 17v5a2 2 0 0 0-2-2H4" />
+            <path d="M8 21h12a2 2 0 0 0-2-2v-1a1 1 0 0 0-1-1H1a1 1 0 0 0 1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" />
+        </svg>
+    );
+    const { openSignIn } = useClerk()
+    const { user, navigate } = useAppContext()
     return (
 
         <header className='absolute top-0 left-0 right-0 z-50 bg-white py-2 shadow-md'>
@@ -55,16 +78,31 @@ const Header = () => {
                     </div>
 
                     {/* User Profile*/}
-                    <div className='group relative'>
-                        <button className='btn-secondary flexCenter gap-1 rounded-full text-sm py-2 px-3'> {/* Buton dolgu ve metin küçültüldü */}
-                            Login
-                            <img src={assets.user} alt="user icon"
-                                className='invert w-4' /> {/* İkon küçültüldü */}
-                        </button>
+                    <div className='group'>
+                        {user ?
+                            (
+                                <UserButton>
+                                    <UserButton.MenuItems>
+                                        <UserButton.Action
+                                            label='My Orders'
+                                            labelIcon={<OrdersIcon />}
+                                            onClick={() => navigate('/my-orders')}
+                                        />
+                                    </UserButton.MenuItems>
+                                </UserButton>
+                            )
+                            :
+                            (
+                                <button onClick={openSignIn} className='btn-secondary flexCenter gap-1 rounded-full text-sm py-2 px-3'> {/* Buton dolgu ve metin küçültüldü */}
+                                    Login
+                                    <img src={assets.user} alt="user icon"
+                                        className='invert w-4' />
+                                </button>
+                            )}
                     </div>
                 </div>
             </div>
-        </header>
+        </header >
     )
 }
 
