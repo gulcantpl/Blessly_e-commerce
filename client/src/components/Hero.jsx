@@ -21,12 +21,15 @@ const Hero = () => {
                         <p className='text-sm sm:text-base md:text-xl pl-5 max-w-lg mb-6'>
                             From dramatic Smoky Eyeshadow Palettes to long-wearing Liquid Lipsticks—find the high-performance products loved by beauty experts.
                         </p>
-
                         <div className='flex pl-4'>
                             <Link
                                 to={'/collection'}
                                 className='bg-white text-gray-800 py-3 px-6 rounded-full 
-                                       font-semibold hover:bg-gray-200 transition duration-300'
+                                    font-semibold 
+                                    transition duration-300
+                                    hover:bg-gray-200 
+                                    hover:shadow-lg
+                                    hover:-translate-y-0.5'
                             >
                                 Our Collection
                             </Link>
