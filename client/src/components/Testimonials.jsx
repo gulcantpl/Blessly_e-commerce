@@ -31,13 +31,13 @@ export default function BlisslyTestimonials() {
             quote: "A seamless integration that saved us countless developer hours.",
             name: "Noah Patel",
             title: "CTO, DevWorks",
-            image: assets.user1, // user5 yok, hata olmaması için user1 yaptım
+            image: assets.user1,
         },
         {
             quote: "The user experience is outstanding and setup was a breeze.",
             name: "Oliver Brooks",
             title: "Marketing Director",
-            image: assets.user2, // user6 yok, user2 yaptım
+            image: assets.user2,
         },
     ];
 

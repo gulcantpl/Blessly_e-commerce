@@ -4,7 +4,7 @@ import heroImage from '../assets/hero.png';
 
 const Hero = () => {
     return (
-        <section className='max-padd-container  relative h-[60vh] md:h-[80vh] lg:h-[85vh] mt-18 md:mt-15  rounded-4xl overflow-hidden'>
+        <section className='max-padd-container  relative h-[60vh] md:h-[80vh] lg:h-[85vh] mt-18 md:mt-17  rounded-4xl overflow-hidden'>
 
             <div className='rounded-t-full'>
                 <img
