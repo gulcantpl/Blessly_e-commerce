@@ -12,7 +12,7 @@ const PopularProducts = () => {
 
     useEffect(() => {
 
-        const data = products.filter((item) => item.popular).slice(0, 10); // İlk 10 popüler ürünü aldık
+        const data = products.filter((item) => item.popular && item.inStock).slice(0, 10); // İlk 10 popüler ürünü aldık
         setPopularProducts(data);
     }, [products]);
 
@@ -31,7 +31,7 @@ const PopularProducts = () => {
                     spaceBetween={40}
 
                     autoplay={{
-                        delay: 4500,
+                        delay: 4000,
                         disableOnInteraction: false,
                     }}
                     breakpoints={{
