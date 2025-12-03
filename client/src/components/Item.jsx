@@ -19,7 +19,7 @@ const formatPrice = (price, currencyCode) => {
 };
 
 const Item = ({ product }) => {
-    const { currency } = useAppContext();
+    const { currency, addToCart } = useAppContext();
     const [hovered, setHovered] = useState(false);
     const { _id, title, images, type, price } = product;
 
@@ -28,7 +28,12 @@ const Item = ({ product }) => {
         [price.unit, currency]
     );
 
-    const cardClass = `group cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-2xl rounded-xl overflow-hidden`;
+    const cardClass = `group relative cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-2xl rounded-xl overflow-hidden`;
+
+    const handleAddToCart = (e) => {
+        e.preventDefault(); // Link yönlendirmesini engelle
+        addToCart(product, 1);
+    };
 
     return (
         <Link to={`/products/${_id}`} onClick={() => window.scrollTo(0, 0)}>
@@ -37,7 +42,8 @@ const Item = ({ product }) => {
                 onMouseLeave={() => setHovered(false)}
                 className={cardClass}
             >
-                <div className='bg-white rounded-xl'>
+                <div className='bg-white rounded-xl relative'>
+
                     {/* Image */}
                     <div className='flex justify-center items-center h-[250px] w-full relative'>
                         <img
@@ -48,17 +54,25 @@ const Item = ({ product }) => {
                     </div>
 
                     {/* Info */}
-                    <div className='pt-3 px-3 pb-4 text-left'>
+                    <div className='pt-3 px-3 mt-1 pb-4 text-left'>
                         <p className='text-xs text-gray-500 mb-2 capitalize inline-block bg-gray-100 rounded-full px-3 py-1 font-medium'>
                             {type}
                         </p>
-                        <h5 className='text-base font-semibold text-gray-800 truncate mt-1'>
+                        <h5 className='text-base font-semibold mb-4 text-gray-800 truncate mt-1'>
                             {title}
                         </h5>
                         <p className='text-md font-bold text-secondary mt-1'>
                             {displayPrice}
                         </p>
                     </div>
+
+                    {/* Add to Cart Button */}
+                    <button
+                        onClick={handleAddToCart}
+                        className={`absolute bottom-3 right-3 px-3 py-1 text-sm bg-purple-600 text-white rounded-full shadow-md hover:bg-purple-700 transition`}
+                    >
+                        Add to Cart
+                    </button>
                 </div>
             </div>
         </Link>

@@ -90,9 +90,7 @@ export const assets = {
   uploadIcon,
 };
 
-// =================================================================
-// 🖼️ ÜRÜN GÖRSELLERİ İÇİN IMPORT LİSTESİ (1-48, .png)
-// =================================================================
+
 
 import product_1 from "./product_1.png";
 import product_2 from "./product_2.png";
