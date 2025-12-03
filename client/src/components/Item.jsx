@@ -1,80 +1,80 @@
-import React, { useState } from 'react'
-import { useAppContext } from '../context/AppContext'
+import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { useAppContext } from '../context/AppContext';
+
+const formatPrice = (price, currencyCode) => {
+    const locale = 'en-US';
+    const code = currencyCode || 'USD';
+    try {
+        return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency: code,
+            minimumFractionDigits: 2,
+        }).format(price);
+    } catch {
+        const symbol = code === 'USD' ? '$' : code;
+        return `${symbol}${price.toFixed(2)}`;
+    }
+};
 
 const Item = ({ product }) => {
-    const { navigate, currency } = useAppContext()
-    const [hovered, setHovered] = useState(false)
-    const [size, setSize] = useState(product.sizes[0])
+    const { currency } = useAppContext();
+    const [hovered, setHovered] = useState(false);
+    const { _id, title, images, type, price } = product;
 
-    const handleNavigate = () => {
-        navigate(`/products/${product._id}`);
-        scrollTo(0, 0);
-    }
+    const displayPrice = useMemo(() =>
+        formatPrice(price.unit, currency),
+        [price.unit, currency]
+    );
+
+    const cardClass = `group cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-2xl rounded-xl overflow-hidden`;
 
     return (
-        <div
-            onClick={handleNavigate}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            className='group cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl rounded-xl'
-        >
-            <div className='overflow-hidden shadow-lg rounded-xl'>
-
-                {/* Image Container */}
-                <div
-                    className='flexCenter h-[250px] w-full transition-all duration-300 relative bg-white'
-                >
-                    <img
-                        src={
-                            product.images.length > 1 && hovered
-                                ? product.images[1]
-                                : product.images[0]
-                        }
-                        alt={product.title}
-                        width={200}
-                        height={200}
-                        className={`object-contain w-auto h-full p-4 transition-all duration-300`}
-                    />
-
-                    {/* QUICK VIEW Button  */}
-                    <div
-                        className={`absolute inset-x-0 bottom-0 flex justify-center pb-4 transition-all duration-300 transform 
-                            ${hovered ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}
-                    >
-                        <button
-                            onClick={(e) => { e.stopPropagation(); handleNavigate() }}
-                            className={`w-11/12 py-2 text-sm font-semibold text-white bg-secondary 
-                                hover:bg-black/70 transition-colors duration-200 rounded-full shadow-md`}
-                        >
-                            Quick View
-                        </button>
+        <Link to={`/products/${_id}`} onClick={() => window.scrollTo(0, 0)}>
+            <div
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+                className={cardClass}
+            >
+                <div className='bg-white rounded-xl'>
+                    {/* Image */}
+                    <div className='flex justify-center items-center h-[250px] w-full relative'>
+                        <img
+                            src={images[0]}
+                            alt={title}
+                            className='object-contain w-auto h-full p-4 transition-all duration-300'
+                        />
                     </div>
 
-                </div>
-
-                {/* INFO  */}
-                <div className='pt-3 px-3 pb-4 text-left'>
-
-                    {/*Category/Type */}
-                    <p className='text-xs text-gray-500 mb-2 capitalize 
-                        inline-block bg-gray-100 rounded-full px-3 py-1 font-medium'>
-                        {product.type}
-                    </p>
-
-                    {/* Title */}
-                    <h5 className='text-base font-semibold text-gray-800 truncate mt-1'>
-                        {product.title}
-                    </h5>
-
-                    {/* Price */}
-                    <p className='text-md font-bold text-secondary mt-1'>
-                        {currency}{product.price.unit}.00
-                    </p>
-
+                    {/* Info */}
+                    <div className='pt-3 px-3 pb-4 text-left'>
+                        <p className='text-xs text-gray-500 mb-2 capitalize inline-block bg-gray-100 rounded-full px-3 py-1 font-medium'>
+                            {type}
+                        </p>
+                        <h5 className='text-base font-semibold text-gray-800 truncate mt-1'>
+                            {title}
+                        </h5>
+                        <p className='text-md font-bold text-secondary mt-1'>
+                            {displayPrice}
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
-}
+        </Link>
+    );
+};
 
-export default Item
+Item.propTypes = {
+    product: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        images: PropTypes.arrayOf(PropTypes.string).isRequired,
+        type: PropTypes.string.isRequired,
+        price: PropTypes.shape({
+            unit: PropTypes.number.isRequired,
+        }).isRequired,
+    }).isRequired,
+};
+
+export default Item;

@@ -5,7 +5,7 @@ const navLinks = [
     { path: '/', title: 'Home' },
     { path: '/collection', title: 'Collection' },
     { path: '/blog', title: 'Blog' },
-    { path: '/contact', title: 'Contact' },
+    { path: '/contact', title: 'Mail / Keep in Touch' },
 ];
 
 export default function Footer() {
@@ -22,10 +22,32 @@ export default function Footer() {
                         className="h-12 w-auto mb-5"
                     />
 
-                    <p className="text-sm leading-relaxed text-gray-600">
+                    <p className="text-sm leading-relaxed text-gray-600 mb-6">
                         Blessly is a modern cosmetic brand offering premium beauty essentials
                         that highlight your natural glow. Elegance made simple.
                     </p>
+
+                    {/* Newsletter */}
+                    <div className="mt-4">
+                        <h3 className="font-semibold text-gray-800 mb-2">Subscribe to our newsletter</h3>
+                        <p className="text-sm text-gray-600 mb-3">
+                            The latest news, articles, and resources, sent to your inbox weekly.
+                        </p>
+                        <form className="relative w-full max-w-sm">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className="w-full px-4 py-3 pr-14 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            />
+                            <button
+                                type="submit"
+                                className="absolute top-1/2 right-1 transform -translate-y-1/2 bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-700 transition"
+                            >
+                                ➤
+                            </button>
+                        </form>
+                    </div>
+
                 </div>
 
                 {/* NAVIGATION + CONTACT */}
@@ -48,21 +70,13 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Contact */}
+                    {/* Mail / Keep in Touch */}
                     <div>
-                        <h2 className="font-semibold mb-5 text-gray-800">Get in Touch</h2>
+                        <h2 className="font-semibold mb-5 text-gray-800">Keep in Touch</h2>
                         <div className="text-sm space-y-2">
                             <p className="flex items-center gap-2">
-                                <img src={assets.phone} alt="" className="w-4" />
-                                +1 (310) 884-29{Math.floor(Math.random() * 90 + 10)}
-                            </p>
-                            <p className="flex items-center gap-2">
-                                <img src={assets.mail} alt="" className="w-4" />
-                                info{Math.floor(Math.random() * 99)}@blessly-demo.com
-                            </p>
-                            <p className="flex items-center gap-2">
-                                <img src={assets.house} alt="" className="w-4" />
-                                Los Angeles, CA (Demo Address)
+                                <img src={assets.mail} alt="Mail Icon" className="w-4" />
+                                hello{Math.floor(Math.random() * 99)}@blessly-demo.com
                             </p>
                         </div>
                     </div>

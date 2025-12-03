@@ -41,7 +41,7 @@ import hero from "./hero.png"
 import uploadIcon from "../assets/upload_icon.png";
 import features1 from "../assets/features1.jpg";
 import features2 from "../assets/features2.jpg";
-import banner from "../assets/banner.png"
+import banner from "../assets/banner3.png"
 
 export const assets = {
   logoImg,
