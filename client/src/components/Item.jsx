@@ -3,47 +3,33 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
-const formatPrice = (price, currencyCode) => {
-    const locale = 'en-US';
-    const code = currencyCode || 'USD';
-    try {
-        return new Intl.NumberFormat(locale, {
-            style: 'currency',
-            currency: code,
-            minimumFractionDigits: 2,
-        }).format(price);
-    } catch {
-        const symbol = code === 'USD' ? '$' : code;
-        return `${symbol}${price.toFixed(2)}`;
-    }
-};
+
 
 const Item = ({ product }) => {
-    const { currency, addToCart } = useAppContext();
+    const { currency, addToCart, formatPrice } = useAppContext();
     const [hovered, setHovered] = useState(false);
     const { _id, title, images, type, price } = product;
 
     const displayPrice = useMemo(() =>
         formatPrice(price.unit, currency),
-        [price.unit, currency]
+        [price.unit, currency, formatPrice]
     );
 
     const cardClass = `group relative cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-2xl rounded-xl overflow-hidden`;
 
     const handleAddToCart = (e) => {
-        e.preventDefault(); // Link yönlendirmesini engelle
+        e.preventDefault();
         addToCart(product, 1);
     };
 
     return (
-        <Link to={`/products/${_id}`} onClick={() => window.scrollTo(0, 0)}>
-            <div
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-                className={cardClass}
-            >
+        <div
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            className={cardClass}
+        >
+            <Link to={`/products/${_id}`} onClick={() => window.scrollTo(0, 0)}>
                 <div className='bg-white rounded-xl relative'>
-
                     {/* Image */}
                     <div className='flex justify-center items-center h-[250px] w-full relative'>
                         <img
@@ -65,17 +51,17 @@ const Item = ({ product }) => {
                             {displayPrice}
                         </p>
                     </div>
-
-                    {/* Add to Cart Button */}
-                    <button
-                        onClick={handleAddToCart}
-                        className={`absolute bottom-3 right-3 px-3 py-1 text-sm bg-purple-600 text-white rounded-full shadow-md hover:bg-purple-700 transition`}
-                    >
-                        Add to Cart
-                    </button>
                 </div>
-            </div>
-        </Link>
+            </Link>
+
+            {/* Add to Cart Button */}
+            <button
+                onClick={handleAddToCart}
+                className={`absolute bottom-3 right-3 px-3 py-1 text-sm bg-purple-600 text-white rounded-full shadow-md hover:bg-purple-700 transition`}
+            >
+                Add to Cart
+            </button>
+        </div>
     );
 };
 

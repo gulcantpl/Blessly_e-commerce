@@ -6,6 +6,8 @@ import Collection from './pages/Collection'
 import ProductDetails from './pages/ProductDetails'
 import Blog from './pages/Blog'
 import Contact from './pages/Contact'
+import PaymentPage from './pages/PaymentPage'
+
 
 const App = () => {
   return (
@@ -17,6 +19,7 @@ const App = () => {
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path='/blog/' element={<Blog />} />
         <Route path='/contact/' element={<Contact />} />
+        <Route path='/payment/' element={<PaymentPage />} />
       </Routes>
     </main>
   )
